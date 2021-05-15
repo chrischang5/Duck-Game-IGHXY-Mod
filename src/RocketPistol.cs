@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DuckGame;
 
 namespace DuckGame.MyMod
 {
@@ -16,14 +17,15 @@ namespace DuckGame.MyMod
             this._ammoType.accuracy = 1f; // high acc = sniper, low acc = smg
             this._ammoType.penetration = 1f; // Larger penetration = can go through more things
             this._type = "gun";
-            base.graphic = new Sprite(GetPath("crateGun")); // See https://duckgamemodding.wordpress.com/2017/06/09/making-your-first-mod/ 
+            base.graphic = new Sprite(GetPath("crateGun"),18,18); // See https://duckgamemodding.wordpress.com/2017/06/09/making-your-first-mod/ 
             this.center = new Vec2(8f, 4.5f); // center of your item 
             this.collisionOffset = new Vec2(-8f, -2f); // keep this as is...
             this.collisionSize = new Vec2(16f, 9f); // NO WHITESPACE
             this._barrelOffsetTL = new Vec2(16f, 1f); // Where bullet shoots from
-            this._holdOffset = new Vec2(1f, 1.5f); // just mess around until it looks good in game
+            this._holdOffset = new Vec2(3f, 1.5f); // just mess around until it looks good in game
             this._fireSound = "missile"; // sound effect! I will have fun with this
             this._kickForce = 3f; // recoil (controls how much you can jump) OH MY GOODNESS IM GONNA MAKE A GUN JUMPER FOR SURE
+            this._bio = "Blue's first custom weapon!";
         }
     }
 }
