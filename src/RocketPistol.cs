@@ -7,9 +7,9 @@ using DuckGame;
 namespace DuckGame.MyMod
 {
     [EditorGroup("MyMod|guns")]
-    public class MyGun : Gun
+    public class RocketPistol : Gun
     {
-        public MyGun(float xval, float yval) : base(xval, yval)
+        public RocketPistol(float xval, float yval) : base(xval, yval) 
         {
             this.ammo = 10; // ammo count
             this._ammoType = new ATMissile();

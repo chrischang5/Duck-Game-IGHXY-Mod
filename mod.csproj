@@ -10,7 +10,7 @@
     <RootNamespace>MyMod</RootNamespace>
     <AssemblyName>MyMod</AssemblyName>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>   
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -47,6 +47,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\ATFlash.cs" />
+    <Compile Include="src\Flash.cs" />
+    <Compile Include="src\GrenadeBase.cs" />
+    <Compile Include="src\Flashbang.cs" />
     <Compile Include="src\RocketPistol.cs" />
     <Compile Include="src\Mod.cs" />
   </ItemGroup>

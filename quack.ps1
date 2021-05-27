@@ -8,4 +8,5 @@ else{
     echo "Stopping Duck Game."
     Stop-Process -Name "DuckGame"
  }
- Start-Process -FilePath "C:\Program Files (x86)\Steam\steamapps\common\Duck Game\DuckGame.exe"
+ # Thank you to u/Hrambert for the help on this
+ Start-Process -FilePath "C:\Program Files (x86)\Steam\steamapps\common\Duck Game\DuckGame.exe" -ArgumentList "-nointro", "-startineditor", "nofullscreen"
