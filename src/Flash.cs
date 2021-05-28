@@ -41,7 +41,7 @@ public class Flash : Thing
 		}
 		foreach (Duck item3 in list)
 		{
-			if (item3.profile.localPlayer && (Level.CheckLine<Block>(position, item3.position, item3) == null || (Level.CheckLine<Door>(position, item3.position, item3) == null || (Level.CheckLine<Crate>(position, item3.position, item3) == null)
+			if (item3.profile.localPlayer && (Level.CheckLine<Block>(position, item3.position, item3) == null))
 			{
 				IsLocalDuckAffected = true;
 				return;
