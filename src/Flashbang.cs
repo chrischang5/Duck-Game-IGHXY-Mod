@@ -12,7 +12,6 @@ namespace DuckGame.MyMod
     [BaggedProperty("isFatal", false)]
     public class Flashbang : GrenadeBase
     {
-
         public Flashbang(float xval, float yval) : base(xval, yval)
         {
             this.sprite = new SpriteMap(GetPath("flashbang"), 7, 7); // Create flashbang asset

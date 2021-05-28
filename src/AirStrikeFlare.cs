@@ -6,27 +6,24 @@ using DuckGame;
 
 namespace DuckGame.src
 {
-    [EditorGroup("MyMod|Explosives")]
-    [BaggedProperty("isFatal", false)]
-    public class NinjaSmoke : GrenadeBase
+    public class AirStrikeFlare : GrenadeBase
     {
-        public NinjaSmoke(float xval, float yval) : base(xval, yval)
+        public AirStrikeFlare(float xval, float yval) : base(xval, yval)
         {
-            this.sprite = new SpriteMap(GetPath("ninjasmoke"), 7, 10);
+            this.sprite = new SpriteMap(GetPath("ninjasmoke"), 7, 10); // Create airstrike asset
             base.graphic = sprite;
 
-            _editorName = "Ninja Smoke";
+            _editorName = "Airstrike Flare";
 
             collisionOffset = new Vec2(-3.5f, -5f);
             collisionSize = new Vec2(7f, 10f);
-            Timer = 10000000f;
+            Timer = 1.2f;
 
             center = new Vec2(3.5f, 5f);
 
             editorTooltip = "#1 Pull pin. #2 Throw grenade. Order of operations is important here.";
-            _bio = "Smoke's Down!";
+            _bio = "Here come's the party!";
         }
-
         public override void Initialize()
         {
             base.Initialize();
@@ -38,43 +35,36 @@ namespace DuckGame.src
             base.Update();
         }
 
+
         public override void OnSoftImpact(MaterialThing with, ImpactedFrom from)
         {
             if (!HasPin)
             {
-                if (with as Duck != null) // detect if you hit a duck
-                {
-                    Timer = 0; // Explode instantly if hit on duck
-                }
+                // Have it stop on boxes and other props
             }
             base.OnSoftImpact(with, from);
         }
 
         public override void Explode()
         {
-            Smoke();
-            SFX.Play(GetPath("sounds/flashGrenadeExplode.wav"));
+            // Signal the airstrike
+            Signal(); 
+            // Play some airstrike sound from WW2
+            //SFX.Play(GetPath("sounds/flashGrenadeExplode.wav"));
             Level.Remove(this);
             base.Explode();
         }
 
-        public virtual void Smoke()
+        public virtual void Signal()
         {
-
-            for (int i = 0; i < 250; ++i)
-            {
-                MusketSmoke musketSmoke = new MusketSmoke(this.x - 16f + Rando.Float(32f) + this.offDir * 10f, this.y - 16f + Rando.Float(32f));
-                musketSmoke.depth = (Depth)((float)(.9f + (float)i * (1f / 1000f)));
-                Level.Add((Thing)musketSmoke);
-            }
+            // somehow signal in an airstrike ???
         }
 
         public override void OnSolidImpact(MaterialThing with, ImpactedFrom from)
         {
-            if (!HasPin) // look into this.owner and Disarm. See Duck class for more details
+            if (!HasPin)
             {
                 Explode();
-                SFX.Play(GetPath("sounds/flashbang_csgo.wav"));
                 Level.Remove(this);
             }
             if (pullOnImpact)
@@ -83,6 +73,6 @@ namespace DuckGame.src
             }
             base.OnSolidImpact(with, from);
         }
-    }
 
+    }
 }

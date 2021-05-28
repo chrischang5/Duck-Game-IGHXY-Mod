@@ -350,5 +350,5 @@ MigrationBackup/
 .ionide/
 
 # Duck Game files
-.dll/
-.hash/
+IGHXY_compiled.dll/
+IGHXY_compiled.hash/
