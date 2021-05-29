@@ -13,15 +13,15 @@ namespace DuckGame.src
         float _radius = 50f;
         public ConcussiveBlast(float xval, float yval) : base(xval, yval)
         {
-            this.sprite = new SpriteMap(GetPath("concussiveblast"), 7, 10);
+            this.sprite = new SpriteMap(GetPath("concussiveblast2"), 9, 11);
             base.graphic = sprite;
 
             _editorName = "Concussive Blast";
 
-            collisionOffset = new Vec2(-3.5f, -5f);
-            collisionSize = new Vec2(7f, 10f);
+            collisionOffset = new Vec2(-4.5f, -5.5f);
+            collisionSize = new Vec2(9f, 11f);
 
-            center = new Vec2(3.5f, 5f);
+            center = new Vec2(4.5f, 5.5f);
 
             editorTooltip = "#1 Pull pin. #2 Throw grenade. Order of operations is important here.";
             _bio = "Move back!";
@@ -46,7 +46,10 @@ namespace DuckGame.src
         public override void Explode()
         {
             Push();
-            SFX.Play(GetPath("sounds/flashGrenadeExplode.wav"));
+            //code from grenade
+            SFX.Play("spring", 0.2f, -0.1f + Rando.Float(0.2f)); // why is there 
+			RumbleManager.AddRumbleEvent(this.position, new RumbleEvent(RumbleIntensity.Heavy, RumbleDuration.Short, RumbleFalloff.Medium));
+            
             Level.Remove(this);
             base.Explode();
         }
@@ -68,7 +71,6 @@ namespace DuckGame.src
                         float num = (float)Math.Atan2((double)p.y - (double)position.y, (double)p.x - (double)position.x);
                         p.hSpeed += _radius * 0.6f * (float)(4.0 / Math.Sqrt((double)(p.position - this.position).length / 2.0) * Math.Cos(num));
                         p.vSpeed += _radius * 0.6f * (float)(4.0 / Math.Sqrt((double)(p.position - this.position).length / 2.0) * Math.Sin(num));
-                        SFX.Play(GetPath("sounds/flashbang_csgo.wav"));
 
                         p.vSpeed -= 0.1f;
                     }
@@ -82,8 +84,6 @@ namespace DuckGame.src
             if (!HasPin)
             {
                 Explode();
-                //SFX.Play(GetPath("sounds/flashbang_csgo.wav"));
-                Level.Remove(this);
             }
             if (pullOnImpact)
             {
