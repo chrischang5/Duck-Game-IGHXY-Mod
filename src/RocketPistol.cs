@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using DuckGame;
 
-namespace DuckGame.MyMod
+namespace DuckGame.IGHXY
 {
     [EditorGroup("MyMod|guns")]
     public class RocketPistol : Gun

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using DuckGame;
 
-namespace DuckGame.src
+namespace DuckGame.IGHXY
 {
     [EditorGroup("MyMod|Explosives")]
     [BaggedProperty("isFatal", false)]
@@ -46,10 +46,11 @@ namespace DuckGame.src
         public override void Explode()
         {
             Push();
+
             //code from grenade
-            SFX.Play("spring", 0.2f, -0.1f + Rando.Float(0.2f)); // why is there 
-			RumbleManager.AddRumbleEvent(this.position, new RumbleEvent(RumbleIntensity.Heavy, RumbleDuration.Short, RumbleFalloff.Medium));
-            
+            SFX.Play("spring", 0.2f, -0.1f + Rando.Float(0.2f));
+            RumbleManager.AddRumbleEvent(this.position, new RumbleEvent(RumbleIntensity.Heavy, RumbleDuration.Short, RumbleFalloff.Medium));
+
             Level.Remove(this);
             base.Explode();
         }
@@ -58,7 +59,7 @@ namespace DuckGame.src
         public virtual void Push()
         {
 
-            foreach (PhysicsObject p in Level.CheckCircleAll<PhysicsObject>(new Vec2(this.x,this.y), _radius * 1.2f))
+            foreach (PhysicsObject p in Level.CheckCircleAll<PhysicsObject>(new Vec2(this.x, this.y), this._radius * 1.2f))
             {
                 if (p.active)
                 {
@@ -66,12 +67,11 @@ namespace DuckGame.src
                     {
                         Fondle(p);
                     }
-                    if(Level.CheckLine<Block>(this.position, p.position, p) == null)
+                    if (Level.CheckLine<Block>(this.position, p.position, p) == null)
                     {
                         float num = (float)Math.Atan2((double)p.y - (double)position.y, (double)p.x - (double)position.x);
                         p.hSpeed += _radius * 0.6f * (float)(4.0 / Math.Sqrt((double)(p.position - this.position).length / 2.0) * Math.Cos(num));
                         p.vSpeed += _radius * 0.6f * (float)(4.0 / Math.Sqrt((double)(p.position - this.position).length / 2.0) * Math.Sin(num));
-
                         p.vSpeed -= 0.1f;
                     }
 

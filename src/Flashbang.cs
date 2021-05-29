@@ -6,7 +6,7 @@ using DuckGame;
 
 // Credit to https://steamcommunity.com/sharedfiles/filedetails/?id=775942759 for helping me createtgrenade
 
-namespace DuckGame.MyMod
+namespace DuckGame.IGHXY
 {
     [EditorGroup("MyMod|Explosives")]
     [BaggedProperty("isFatal", false)]

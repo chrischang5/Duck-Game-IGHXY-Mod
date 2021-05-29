@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using DuckGame;
 
-namespace DuckGame.src
+namespace DuckGame.IGHXY
 {
     public class AirStrikeFlare : GrenadeBase
     {
