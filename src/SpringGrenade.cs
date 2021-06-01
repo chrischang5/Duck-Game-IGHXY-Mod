@@ -8,15 +8,15 @@ namespace DuckGame.IGHXY
 {
     [EditorGroup("MyMod|Explosives")]
     [BaggedProperty("isFatal", false)]
-    public class ConcussiveBlast : GrenadeBase
+    public class SpringGrenade : GrenadeBase
     {
         float _radius = 50f;
-        public ConcussiveBlast(float xval, float yval) : base(xval, yval)
+        public SpringGrenade(float xval, float yval) : base(xval, yval)
         {
             this.sprite = new SpriteMap(GetPath("concussiveblast2"), 9, 11);
             base.graphic = sprite;
 
-            _editorName = "Concussive Blast";
+            _editorName = "Spring Grenade";
 
             collisionOffset = new Vec2(-4.5f, -5.5f);
             collisionSize = new Vec2(9f, 11f);
@@ -47,7 +47,6 @@ namespace DuckGame.IGHXY
         {
             Push();
 
-            //code from grenade
             SFX.Play("spring", 0.2f, -0.1f + Rando.Float(0.2f));
             RumbleManager.AddRumbleEvent(this.position, new RumbleEvent(RumbleIntensity.Heavy, RumbleDuration.Short, RumbleFalloff.Medium));
 
@@ -56,6 +55,7 @@ namespace DuckGame.IGHXY
         }
 
         // Physics portion of Push() taken from DuckFu's Moveset.DoQuack() method
+
         public virtual void Push()
         {
 
@@ -67,7 +67,7 @@ namespace DuckGame.IGHXY
                     {
                         Fondle(p);
                     }
-                    if (Level.CheckLine<Block>(this.position, p.position, p) == null)
+                    if (Level.CheckLine<Block>(this.position, p.position, p) == null && Level.CheckLine<Door>(this.position, p.position, p) == null)
                     {
                         float num = (float)Math.Atan2((double)p.y - (double)position.y, (double)p.x - (double)position.x);
                         p.hSpeed += _radius * 0.6f * (float)(4.0 / Math.Sqrt((double)(p.position - this.position).length / 2.0) * Math.Cos(num));

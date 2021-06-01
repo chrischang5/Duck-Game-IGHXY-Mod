@@ -4,12 +4,16 @@ using System.Linq;
 using System.Text;
 using DuckGame;
 
-namespace DuckGame.src
+namespace DuckGame.IGHXY
 {
     [EditorGroup("MyMod|Explosives")]
     [BaggedProperty("isFatal", false)]
+
+    // Goal: Have pin be an impact-only hit
+    // have no pin be a timer
     public class NinjaSmoke : GrenadeBase
     {
+        bool startedPinCount = false;
         public NinjaSmoke(float xval, float yval) : base(xval, yval)
         {
             this.sprite = new SpriteMap(GetPath("ninjasmoke"), 7, 10);
@@ -19,7 +23,7 @@ namespace DuckGame.src
 
             collisionOffset = new Vec2(-3.5f, -5f);
             collisionSize = new Vec2(7f, 10f);
-            Timer = 10000000f;
+            Timer = 10000000f; // huge number for pin behaviour
 
             center = new Vec2(3.5f, 5f);
 
@@ -35,17 +39,22 @@ namespace DuckGame.src
         public override void Update()
         {
             sprite.frame = HasPin ? 0 : 1;
+
+            // if smoke does not have pin, update timer value (But only do it once)
+            if (!HasPin && !startedPinCount)
+            {
+                startedPinCount = true;
+                Timer = 1.2f;
+            }
             base.Update();
         }
 
         public override void OnSoftImpact(MaterialThing with, ImpactedFrom from)
         {
+            // Explode instantly if hit anything and has a pin
             if (!HasPin)
             {
-                if (with as Duck != null) // detect if you hit a duck
-                {
-                    Timer = 0; // Explode instantly if hit on duck
-                }
+                Explode();
             }
             base.OnSoftImpact(with, from);
         }
@@ -54,14 +63,14 @@ namespace DuckGame.src
         {
             Smoke();
             SFX.Play(GetPath("sounds/flashGrenadeExplode.wav"));
+            SFX.Play(GetPath("sounds/flashbang_csgo.wav"));
             Level.Remove(this);
             base.Explode();
         }
 
         public virtual void Smoke()
         {
-
-            for (int i = 0; i < 250; ++i)
+            for (int i = 0; i < 300; ++i)
             {
                 MusketSmoke musketSmoke = new MusketSmoke(this.x - 16f + Rando.Float(32f) + this.offDir * 10f, this.y - 16f + Rando.Float(32f));
                 musketSmoke.depth = (Depth)((float)(.9f + (float)i * (1f / 1000f)));
@@ -71,11 +80,11 @@ namespace DuckGame.src
 
         public override void OnSolidImpact(MaterialThing with, ImpactedFrom from)
         {
-            if (!HasPin) // look into this.owner and Disarm. See Duck class for more details
+
+            if (!HasPin)
             {
+                // if smoke has pin, explode on solid impact
                 Explode();
-                SFX.Play(GetPath("sounds/flashbang_csgo.wav"));
-                Level.Remove(this);
             }
             if (pullOnImpact)
             {
@@ -83,6 +92,17 @@ namespace DuckGame.src
             }
             base.OnSolidImpact(with, from);
         }
+
+        public override void OnPressAction()
+        {
+            if (HasPin)
+            {
+                // if the pin exists, do not update timer
+                HasPin = false;
+            }
+
+        }
+
     }
 
 }
