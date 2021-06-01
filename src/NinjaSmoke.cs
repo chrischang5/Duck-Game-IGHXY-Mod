@@ -9,8 +9,6 @@ namespace DuckGame.IGHXY
     [EditorGroup("MyMod|Explosives")]
     [BaggedProperty("isFatal", false)]
 
-    // Goal: Have pin be an impact-only hit
-    // have no pin be a timer
     public class NinjaSmoke : GrenadeBase
     {
         bool startedPinCount = false;
@@ -23,7 +21,7 @@ namespace DuckGame.IGHXY
 
             collisionOffset = new Vec2(-3.5f, -5f);
             collisionSize = new Vec2(7f, 10f);
-            Timer = 10000000f; // huge number for pin behaviour
+            Timer = 10000000f;
 
             center = new Vec2(3.5f, 5f);
 
@@ -39,19 +37,11 @@ namespace DuckGame.IGHXY
         public override void Update()
         {
             sprite.frame = HasPin ? 0 : 1;
-
-            // if smoke does not have pin, update timer value (But only do it once)
-            if (!HasPin && !startedPinCount)
-            {
-                startedPinCount = true;
-                Timer = 1.2f;
-            }
             base.Update();
         }
 
         public override void OnSoftImpact(MaterialThing with, ImpactedFrom from)
         {
-            // Explode instantly if hit anything and has a pin
             if (!HasPin)
             {
                 Explode();
@@ -62,8 +52,7 @@ namespace DuckGame.IGHXY
         public override void Explode()
         {
             Smoke();
-            SFX.Play(GetPath("sounds/flashGrenadeExplode.wav"));
-            SFX.Play(GetPath("sounds/flashbang_csgo.wav"));
+            SFX.Play(GetPath("sounds" + Path.DirectorySeparatorChar + "flashbang_csgo.wav"));
             Level.Remove(this);
             base.Explode();
         }
@@ -83,7 +72,6 @@ namespace DuckGame.IGHXY
 
             if (!HasPin)
             {
-                // if smoke has pin, explode on solid impact
                 Explode();
             }
             if (pullOnImpact)
@@ -97,7 +85,6 @@ namespace DuckGame.IGHXY
         {
             if (HasPin)
             {
-                // if the pin exists, do not update timer
                 HasPin = false;
             }
 

@@ -22,7 +22,7 @@ namespace DuckGame.IGHXY
             center = new Vec2(3.5f, 5f);
 
             editorTooltip = "#1 Pull pin. #2 Throw grenade. Order of operations is important here.";
-            _bio = "Here come's the party!";
+            _bio = "Here comes the party!";
         }
         public override void Initialize()
         {
@@ -50,7 +50,6 @@ namespace DuckGame.IGHXY
             // Signal the airstrike
             Signal(); 
             // Play some airstrike sound from WW2
-            //SFX.Play(GetPath("sounds/flashGrenadeExplode.wav"));
             Level.Remove(this);
             base.Explode();
         }

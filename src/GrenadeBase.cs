@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using DuckGame;
 
-//GrenadeBase class sourced from the Duck Game Mod titled Thomas' Grenade Pack: https://steamcommunity.com/sharedfiles/filedetails/?id=491555785&searchtext=grenade
-
+// This class definition is not written by me.
+// Original code sourced from Thomas' Grenade Pack: https://steamcommunity.com/sharedfiles/filedetails/?id=491555785&searchtext=grenade
+// From what I can tell, this class is meant to gain access to certain "Grenade" methods that usually cannot be overriden using the keyword "override".
 
 public abstract class GrenadeBase : Gun
 {
