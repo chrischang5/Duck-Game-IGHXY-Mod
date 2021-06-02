@@ -8,9 +8,11 @@ namespace DuckGame.IGHXY
 {
     [EditorGroup("MyMod|Explosives")]
     [BaggedProperty("isFatal", false)]
+
     public class SpringGrenade : GrenadeBase
     {
-        float _radius = 50f;
+        float _radius = 250f;
+
         public SpringGrenade(float xval, float yval) : base(xval, yval)
         {
             this.sprite = new SpriteMap(GetPath("concussiveblast2"), 9, 11);
@@ -23,7 +25,7 @@ namespace DuckGame.IGHXY
 
             center = new Vec2(4.5f, 5.5f);
 
-            editorTooltip = "#1 Pull pin. #2 Throw grenade. Order of operations is important here.";
+            editorTooltip = "#1 Pull pin. #2 Bounce! Sends enemy ducks flying!";
             _bio = "Move back!";
         }
 
@@ -66,16 +68,21 @@ namespace DuckGame.IGHXY
             {
                 if (p.active)
                 {
-                    if (base.isServerForObject && !(p is Duck) && (!(p is Holdable) || ((p as Holdable).duck == null && (p as Holdable).equippedDuck == null)))
+                    //if (base.isServerForObject && !(p is Duck) && (!(p is Holdable) || ((p as Holdable).duck == null && (p as Holdable).equippedDuck == null)))
+                    //{
+                    //    Fondle(p);
+                    //}
+                    //if (Level.CheckLine<Block>(this.position, p.position, p) == null)
+                    //{
+                    //    float num = (float)Math.Atan2((double)p.y - (double)position.y, (double)p.x - (double)position.x);
+                    //    p.hSpeed += _radius * 0.6f * (float)(4.0 / Math.Sqrt((double)(p.position - this.position).length / 2.0) * Math.Cos(num));
+                    //    p.vSpeed += _radius * 0.6f * (float)(4.0 / Math.Sqrt((double)(p.position - this.position).length / 2.0) * Math.Sin(num));
+                    //    p.vSpeed -= 0.1f;
+                    //}
+                    if (p is Duck && !p.isServerForObject && Level.CheckLine<Block>(this.position, p.position, p) == null && p.active)
                     {
-                        Fondle(p);
-                    }
-                    if (Level.CheckLine<Block>(this.position, p.position, p) == null)
-                    {
-                        float num = (float)Math.Atan2((double)p.y - (double)position.y, (double)p.x - (double)position.x);
-                        p.hSpeed += _radius * 0.6f * (float)(4.0 / Math.Sqrt((double)(p.position - this.position).length / 2.0) * Math.Cos(num));
-                        p.vSpeed += _radius * 0.6f * (float)(4.0 / Math.Sqrt((double)(p.position - this.position).length / 2.0) * Math.Sin(num));
-                        p.vSpeed -= 0.1f;
+                        Send.Message(new NMBump(p as Duck, new Vec2(_radius * 0.6f * (float)(4.0 / Math.Sqrt((double)(p.position - this.position).length / 2.0) * Math.Cos(num)), (_radius * 0.6f * (float)(4.0 / Math.Sqrt((double)(p.position - this.position).length / 2.0) * Math.Sin(num)))) - 0.1f), p.connection);
+                        return;
                     }
 
                 }
