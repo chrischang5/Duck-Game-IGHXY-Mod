@@ -1,5 +1,8 @@
 ﻿using System;
 
+// This Class creates a Net Message that allows the Spring Grenade to be network-safe
+// Thank you to DanTheDanMan on QC Discord for this class!
+
 namespace DuckGame
 {
     public class NMPush : NMEvent
