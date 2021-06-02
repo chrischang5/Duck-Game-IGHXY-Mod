@@ -48,13 +48,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\AirStrikeFlare.cs" />
-    <Compile Include="src\ConcussiveBlast.cs" />
     <Compile Include="src\Flash.cs" />
     <Compile Include="src\GrenadeBase.cs" />
     <Compile Include="src\Flashbang.cs" />
     <Compile Include="src\NinjaSmoke.cs" />
+    <Compile Include="src\NMPush.cs" />
     <Compile Include="src\RocketPistol.cs" />
     <Compile Include="src\Mod.cs" />
+    <Compile Include="src\SpringGrenade.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
