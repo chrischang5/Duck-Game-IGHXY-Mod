@@ -12,7 +12,7 @@ namespace DuckGame.IGHXY
 
     public class NinjaSmoke : GrenadeBase
     {
-        bool startedPinCount = false;
+        
         public NinjaSmoke(float xval, float yval) : base(xval, yval)
         {
             this.sprite = new SpriteMap(GetPath("ninjasmoke"), 7, 10);
@@ -38,6 +38,7 @@ namespace DuckGame.IGHXY
         public override void Update()
         {
             sprite.frame = HasPin ? 0 : 1;
+
             base.Update();
         }
 
@@ -53,7 +54,9 @@ namespace DuckGame.IGHXY
         public override void Explode()
         {
             Smoke();
-            SFX.Play(GetPath("sounds" + Path.DirectorySeparatorChar + "flashbang_csgo.wav"));
+            //SFX.Play(GetPath("sounds" + Path.DirectorySeparatorChar + "flashbang_csgo.wav"));
+            //SFX.Play("explode", 1f, Rando.Float(-0.05f, 0.07f));
+            SFX.Play(Mod.GetPath<IGHXY>("flashbang_csgo") , 1f, Rando.Float(-0.05f, 0.07f));
             Level.Remove(this);
             base.Explode();
         }
